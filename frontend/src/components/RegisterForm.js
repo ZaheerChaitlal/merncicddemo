@@ -23,7 +23,7 @@ function RegisterForm() {
       const res = await axios.post(`${API_URL}/register`, formData);
       setFeedback(res.data.message);//Display success message
     } catch (err) {
-      setFeedback('Registration failed');//Display error message
+      setFeedback(`Registration failed ${err.message}`);//Display error message
     }
   };
 
