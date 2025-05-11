@@ -1,4 +1,4 @@
-name: "CI on Dev (Test + Auto PR)"
+name: "CI on Dev (Test Only)"
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
       - dev
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
     steps:
@@ -29,20 +28,3 @@ jobs:
         run: |
           npm install
           npm test -- --watchAll=false
-
-  create-pr:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Create PR
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: "dev"
-          destination_branch: "main"
-          pr_title: "Auto PR: dev → main"
-          pr_body: "This PR was auto-generated after tests passed."
-          github_token: ${{ secrets.GITHUB_TOKEN }}
